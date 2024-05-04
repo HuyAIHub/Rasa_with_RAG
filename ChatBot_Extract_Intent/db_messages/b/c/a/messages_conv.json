@@ -1,0 +1,181 @@
+[
+    {
+        "type": "human",
+        "data": {
+            "content": "Thông số mô tả của sản phẩm máy hút bụi",
+            "additional_kwargs": {},
+            "response_metadata": {},
+            "type": "human",
+            "name": null,
+            "id": null,
+            "example": false
+        }
+    },
+    {
+        "type": "ai",
+        "data": {
+            "content": "Có nhiều sản phẩm máy hút bụi trong tài liệu, bạn có thể cho tôi biết tên sản phẩm cụ thể mà bạn quan tâm không?",
+            "additional_kwargs": {},
+            "response_metadata": {},
+            "type": "ai",
+            "name": null,
+            "id": null,
+            "example": false,
+            "tool_calls": [],
+            "invalid_tool_calls": []
+        }
+    }
+][
+    {
+        "type": "human",
+        "data": {
+            "content": "Thông số mô tả của sản phẩm máy hút bụi",
+            "type": "human",
+            "time": "2024-05-04 16:42:52"
+        }
+    },
+    {
+        "type": "ai",
+        "data": {
+            "content": "Có nhiều sản phẩm máy hút bụi trong tài liệu, bạn có thể cho tôi biết tên sản phẩm cụ thể mà bạn quan tâm không?",
+            "type": "ai",
+            "time": "2024-05-04 16:42:52"
+        }
+    }
+][
+    {
+        "type": "human",
+        "data": {
+            "content": "Số lượng sản phẩm điều hòa 2 chiều",
+            "type": "human",
+            "time": "2024-05-04 16:43:29"
+        }
+    },
+    {
+        "type": "ai",
+        "data": {
+            "content": "Số lượng điều hòa 2 chiều: 7 sản phẩm\n",
+            "type": "ai",
+            "time": "2024-05-04 16:43:29"
+        }
+    }
+][
+    {
+        "type": "human",
+        "data": {
+            "content": "Số lượng sản phẩm điều hòa 2 chiều",
+            "type": "human",
+            "time": "2024-05-04 16:58:57"
+        }
+    },
+    {
+        "type": "ai",
+        "data": {
+            "content": "Số lượng điều hòa 2 chiều: 7 sản phẩm\n",
+            "type": "ai",
+            "time": "2024-05-04 16:58:57"
+        }
+    }
+][
+    {
+        "type": "human",
+        "data": {
+            "content": "tôi muốn mua Điều hòa dưới 20 triệu",
+            "type": "human",
+            "time": "2024-05-04 17:59:40"
+        }
+    },
+    {
+        "type": "ai",
+        "data": {
+            "content": "Dựa trên yêu cầu của anh/chị:\n\t- 1 Điều hòa với giá dưới 20 triệu\n\nĐể phù hợp với ngân sách và nhu cầu sử dụng của khách hàng, chúng tôi đề xuất sản phẩm sau:\n\nTổng giá trị của gói sản phẩm này là 0VND, giúp khách hàng tiết kiệm và đáp ứng đầy đủ nhu cầu sử dụng.\nNếu có bất kỳ câu hỏi hoặc yêu cầu nào khác, vui lòng liên hệ với chúng tôi. Chúng tôi luôn sẵn lòng hỗ trợ.",
+            "type": "ai",
+            "time": "2024-05-04 17:59:40"
+        }
+    }
+][
+    {
+        "type": "human",
+        "data": {
+            "content": "Tôi muốn mua sản phẩm máy giặt có giá dưới 10 triệu 500 nghìn",
+            "type": "human",
+            "time": "2024-05-04 18:00:31"
+        }
+    },
+    {
+        "type": "ai",
+        "data": {
+            "content": "Dựa trên yêu cầu của anh/chị:\n\t- 1 máy giặt với giá dưới 10 triệu 500 nghìn\n\nĐể phù hợp với ngân sách và nhu cầu sử dụng của khách hàng, chúng tôi đề xuất sản phẩm sau:\n\t+ Với 1 Máy giặt Electrolux UltimateCare 300 Inverter 10 kg EWF1024M3SB: 11500280.0VND - GÓI MUA SẮM MỨC 1\n\t\t(Hoa hòng bán hàng nhận được là: 649040.0000000001VND và hoa hồng triển khai nhận được là: 104548.0VND)\n\nTổng giá trị của gói sản phẩm này là 11500280.0VND, giúp khách hàng tiết kiệm và đáp ứng đầy đủ nhu cầu sử dụng.\nNếu có bất kỳ câu hỏi hoặc yêu cầu nào khác, vui lòng liên hệ với chúng tôi. Chúng tôi luôn sẵn lòng hỗ trợ.",
+            "type": "ai",
+            "time": "2024-05-04 18:00:31"
+        }
+    }
+][
+    {
+        "type": "human",
+        "data": {
+            "content": "Tôi muốn mua sản phẩm máy giặt có giá dưới 10 triệu 500 nghìn",
+            "type": "human",
+            "time": "2024-05-04 18:06:20"
+        }
+    },
+    {
+        "type": "ai",
+        "data": {
+            "content": "Dựa trên yêu cầu của anh/chị:\n\t- 1 máy giặt với giá dưới 10 triệu 500 nghìn\n\nĐể phù hợp với ngân sách và nhu cầu sử dụng của khách hàng, chúng tôi đề xuất sản phẩm sau:\n\t+ Với 1 Máy giặt Electrolux UltimateCare 300 Inverter 10 kg EWF1024M3SB: 11500280.0VND - GÓI MUA SẮM MỨC 1\n\t\t(Hoa hòng bán hàng nhận được là: 649040.0000000001VND và hoa hồng triển khai nhận được là: 104548.0VND)\n\nTổng giá trị của gói sản phẩm này là 11500280.0VND, giúp khách hàng tiết kiệm và đáp ứng đầy đủ nhu cầu sử dụng.\nNếu có bất kỳ câu hỏi hoặc yêu cầu nào khác, vui lòng liên hệ với chúng tôi. Chúng tôi luôn sẵn lòng hỗ trợ.",
+            "type": "ai",
+            "time": "2024-05-04 18:06:20"
+        }
+    }
+][
+    {
+        "type": "human",
+        "data": {
+            "content": "Tôi muốn mua sản phẩm máy giặt có giá dưới 10 triệu 500 nghìn",
+            "type": "human",
+            "time": "2024-05-04 18:10:05"
+        }
+    },
+    {
+        "type": "ai",
+        "data": {
+            "content": "Dựa trên yêu cầu của anh/chị:\n\t- 1 máy giặt với giá dưới 10 triệu 500 nghìn\n\nĐể phù hợp với ngân sách và nhu cầu sử dụng của khách hàng, chúng tôi đề xuất sản phẩm sau:\n\t+ Với 1 Máy giặt Electrolux UltimateCare 300 Inverter 10 kg EWF1024M3SB: 11500280.0VND - GÓI MUA SẮM MỨC 1\n\t\t(Hoa hòng bán hàng nhận được là: 649040.0000000001VND và hoa hồng triển khai nhận được là: 104548.0VND)\n\nTổng giá trị của gói sản phẩm này là 11500280.0VND, giúp khách hàng tiết kiệm và đáp ứng đầy đủ nhu cầu sử dụng.\nNếu có bất kỳ câu hỏi hoặc yêu cầu nào khác, vui lòng liên hệ với chúng tôi. Chúng tôi luôn sẵn lòng hỗ trợ.",
+            "type": "ai",
+            "time": "2024-05-04 18:10:05"
+        }
+    }
+][
+    {
+        "type": "human",
+        "data": {
+            "content": "Tôi muốn mua sản phẩm máy giặt có giá dưới 10 triệu 500 nghìn",
+            "type": "human",
+            "time": "2024-05-04 18:27:36"
+        }
+    },
+    {
+        "type": "ai",
+        "data": {
+            "content": "Dựa trên yêu cầu của anh/chị:\n\t- 1 máy giặt với giá dưới 10 triệu 500 nghìn\n\nĐể phù hợp với ngân sách và nhu cầu sử dụng của khách hàng, chúng tôi đề xuất sản phẩm sau:\n\t+ Với 1 Máy giặt Electrolux UltimateCare 300 Inverter 10 kg EWF1024M3SB: 11500280.0VND - GÓI MUA SẮM MỨC 1\n\t\t(Hoa hòng bán hàng nhận được là: 649040.0000000001VND và hoa hồng triển khai nhận được là: 104548.0VND)\n\nTổng giá trị của gói sản phẩm này là 11500280.0VND, giúp khách hàng tiết kiệm và đáp ứng đầy đủ nhu cầu sử dụng.\nNếu có bất kỳ câu hỏi hoặc yêu cầu nào khác, vui lòng liên hệ với chúng tôi. Chúng tôi luôn sẵn lòng hỗ trợ.",
+            "type": "ai",
+            "time": "2024-05-04 18:27:36"
+        }
+    }
+][
+    {
+        "type": "human",
+        "data": {
+            "content": "có bao nhiêu sản phẩm điều hòa 2 chiều",
+            "type": "human",
+            "time": "2024-05-04 18:28:23"
+        }
+    },
+    {
+        "type": "ai",
+        "data": {
+            "content": "Số lượng điều hòa 2 chiều: 7 sản phẩm\n",
+            "type": "ai",
+            "time": "2024-05-04 18:28:23"
+        }
+    }
+]
