@@ -3,19 +3,18 @@ import os
 from langchain_community.chat_models import ChatOpenAI
 from langchain.prompts.few_shot import FewShotPromptTemplate
 from langchain.prompts.prompt import PromptTemplate
-from ChatBot_Extract_Intent.config_app.config import get_config
+from config_app.config import get_config
 from langchain.chains import LLMChain
 from difflib import get_close_matches
 import csv
-from ChatBot_Extract_Intent.extract_price_info import take_product
-from ChatBot_Extract_Intent.module.predict import predict_llm
+from extract_price_info import take_product
 
 config_app = get_config()
 
 os.environ['OPENAI_API_KEY'] = config_app["parameter"]["openai_api_key"]
 llm = ChatOpenAI(model_name=config_app["parameter"]["gpt_model_to_use"], temperature=config_app["parameter"]["temperature"])
 
-with open('ChatBot_Extract_Intent/data/product_final_204_oke.xlsx - Sheet1.csv', 'r') as file:
+with open('data/product_final_204_oke.xlsx - Sheet1.csv', 'r') as file:
     reader = csv.DictReader(file)
     data = list(reader)
 
@@ -138,13 +137,13 @@ def split_sentences(text_input):
         },
         {
             "command": "Loại máy giặt nào là phổ biến nhất hiện nay?",
-            "demand": "Loại",
+            "demand": "",
             "object": ["máy giặt"],
             "value": "phổ biến nhất",
         },
         {
             "command": "máy giặt phổ biến nhất hiện nay là loại nào?",
-            "demand": "Loại",
+            "demand": "",
             "object": ["máy giặt"],
             "value": "phổ biến nhất",
         },
@@ -216,34 +215,36 @@ def extract_info(chuoi):
     return variables
 
 # Hàm xử lý yêu cầu
-def process_command(command,IdRequest,NameBot,User):
-    lst_mua = ['mua','quan tâm','tìm','thích','bán','cần mua','muốn biết']
-    lst_so_luong = ['số lượng','bao nhiêu','mấy loại']
+def process_command(command):
+    lst_mua = ['mua','quan tâm','tìm','thích','bán']
+    lst_so_luong = ['số lượng','bao nhiêu']
     demands = extract_info(command)
     print("info:",demands)
     
-    if ((demands['demand'].lower() in lst_mua) and len(demands['value']) >= 1) or (len(demands['value']) >= 1 and len(demands['object']) > 0 and len(demands['demand']) == 0):
+    if (demands['demand'].lower() in lst_mua) and len(demands['value']) >= 1:
         return handle_buy(demands)
     elif (demands['demand'].lower() in lst_mua) and len(demands['value']) == 0:
         return handle_interest(demands)
     elif demands['demand'].lower() in lst_so_luong:
         return handle_count(demands)
-        
-    # elif demands['demand'].lower() == 'loại':
-    #     return handle_type(demands)
-    # elif demands['demand'].lower() == 'bảo hành':
-    #     return handle_warranty(demands)
-    # elif demands['demand'].lower() == 'thời gian sử dụng trung bình':
-    #     return handle_average_usage(demands)
-    # elif demands['demand'].lower() == 'tốt hơn':
-    #     return handle_better(demands)
+    # elif demands['demand'].lower() == 'công suất':
+    #     return handle_power(demands)
+    elif demands['demand'].lower() == 'giá': # x
+        return take_product(demands['command'])
+    elif demands['demand'].lower() == 'loại':
+        return handle_type(demands)
+    elif demands['demand'].lower() == 'bảo hành':
+        return handle_warranty(demands)
+    elif demands['demand'].lower() == 'thời gian sử dụng trung bình':
+        return handle_average_usage(demands)
+    elif demands['demand'].lower() == 'tốt hơn':
+        return handle_better(demands)
     else:
-        return predict_llm(demands["command"],IdRequest,NameBot,User)
+        return "Xin lỗi, tôi không hiểu yêu cầu của bạn."
 
 # Các hàm xử lý cụ thể
 import re
 def handle_buy(demands):
-    print('======handle_buy======')
     # Xử lý yêu cầu
     matching_products = []
     for product in data:
@@ -272,11 +273,10 @@ def handle_buy(demands):
                 result_string += f"- {' '.join(demands['object'])} {match.title()}\n"
         else:
             # result_string += f"Không tìm thấy {' '.join(demands['object'])} từ {demands['value'].title()} trong dữ liệu."
-            result_string = take_product(demands)
+            result_string = take_product(demands['command'])
     return result_string
 
 def handle_interest(demands):
-    print('======handle_interest======')
     # Xử lý yêu cầu quan tâm đến sản phẩm với giá trị cụ thể
     found_products = {}
     for product in data:
@@ -294,7 +294,7 @@ def handle_interest(demands):
         if keyword in found_products:
             result_string += f"Sản phẩm '{keyword}' tìm thấy:\n"
             if found_products[keyword]:
-                for product in found_products[keyword][:config_app['parameter']['num_product']]:  # In ra 3 sản phẩm đầu tiên
+                for product in found_products[keyword][:3]:  # In ra 3 sản phẩm đầu tiên
                     result_string += f"- {product['PRODUCT_NAME']} - Giá: {product['RAW_PRICE']}\n"
                     specifications = product['SPECIFICATION_BACKUP'].split('\n')
                     result_string += "  Thông số kỹ thuật:\n"
@@ -312,7 +312,6 @@ def handle_sale(demands):
     pass
 
 def handle_count(demands):
-    print('======handle_count======')
     # Xử lý yêu cầu về số lượng sản phẩm
     matching_products = []
     for product in data:
@@ -348,6 +347,64 @@ def handle_count(demands):
 def handle_power(demands):
     # Xử lý yêu cầu về công suất của sản phẩm
     pass
+def parse_price_range(value):
+    pattern = r"(?P<prefix>\b(dưới|trên|từ|đến|khoảng)\s*)?(?P<number>\d+(?:,\d+)*)\s*(?P<unit>triệu|nghìn)?\b"
+
+    min_price = 0
+    max_price = float('inf')
+
+    for match in re.finditer(pattern, value, re.IGNORECASE):
+        prefix = match.group('prefix') or ''
+        number = float(match.group('number').replace(',', ''))
+        unit = match.group('unit') or ''
+
+        if unit.lower() == 'triệu':
+            number *= 1000000
+        elif unit.lower() == 'nghìn':
+            number *= 1000
+
+        if prefix.lower().strip() == 'dưới':
+            max_price = min(max_price, number)
+        elif prefix.lower().strip() == 'trên':
+            min_price = min(max_price, number)
+        elif prefix.lower().strip() in ('từ', 'khoảng'):
+            min_price = min(max_price, number)
+        elif prefix.lower().strip() == 'đến':
+            max_price = max(min_price, number)
+        else:  # Trường hợp không có từ khóa
+            min_price = min(min_price, number * 0.9)
+            max_price = max(max_price, number * 1.1)
+
+    if min_price == float('inf'):
+        min_price = 0
+    return min_price, max_price
+
+def handle_price(demands):
+    # Xử lý yêu cầu về giá của sản phẩm
+        # Xử lý yêu cầu
+    matching_products = []
+    # if demands["demand"] == "giá":
+    for product in data:
+        group_name = product['GROUP_PRODUCT_NAME'].lower()
+        if any(obj.lower() in group_name for obj in demands["object"]):
+            raw_price_str = re.sub(r'[^0-9,]', '', product['RAW_PRICE'])
+            raw_price = float(raw_price_str.replace(',', ''))
+            min_price, max_price = parse_price_range(demands["value"].lower())
+            if min_price <= raw_price <= max_price:
+                matching_products.append(product)
+    # else:
+    #     return "Câu hỏi không liên quan đến giá sản phẩm."
+
+    # Trả kết quả vào một chuỗi
+    result_string = ""
+    if matching_products:
+        result_string += f"{demands['object'][0].title()} {demands['value']} tìm thấy:\n"
+        for product in matching_products:
+            result_string += f"- {product['PRODUCT_NAME']} - Giá: {product['RAW_PRICE']} VNĐ\n"
+    else:
+        result_string += f"Không tìm thấy {demands['object'][0]} {demands['value']} trong dữ liệu."
+
+    return result_string
 
 def handle_type(demands):
     # Xử lý yêu cầu về loại sản phẩm phổ biến
@@ -386,9 +443,9 @@ def handle_better(objects):
 # command = 'Tôi muốn mua sản phẩm máy giặt lồng ngang có giá trên 10 triệu'  #=> fail
 # 5
 
-# command = 'Tôi muốn mua sản phẩm máy giặt lồng ngang'  #=> fail
+command = 'tôi muốn mua Ghế massage daikiosan từ 10tr đên 20tr'  #=> fail
 
 
-# result = process_command(command,'a','a1','b','c')
+result = process_command(command)
 
-# print(result)
+print(result)

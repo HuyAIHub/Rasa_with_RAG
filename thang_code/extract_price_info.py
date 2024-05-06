@@ -1,19 +1,22 @@
-import os, re
+import os
 from langchain_community.chat_models import ChatOpenAI
 from langchain.prompts.few_shot import FewShotPromptTemplate
 from langchain.prompts.prompt import PromptTemplate
-from ChatBot_Extract_Intent.config_app.config import get_config
+from config_app.config import get_config
 from langchain.chains import LLMChain
+import openpyxl
 import time
 import pandas as pd
-
+import json
+from module.search_product import product_seeking_terms,product_seeking
+from take_info import parse_price_range
 config_app = get_config()
 
 os.environ['OPENAI_API_KEY'] = config_app["parameter"]["openai_api_key"]
 llm = ChatOpenAI(model_name=config_app["parameter"]["gpt_model_to_use"], temperature=config_app["parameter"]["temperature"])
 path = config_app['parameter']['data_private']
 data = pd.read_excel(path)
-data = data.fillna(0)
+
 def split_sentences(text_input):
     # First, create the list of few shot examples.
     examples = [
@@ -166,44 +169,25 @@ def search_obj_val(text_input):
 
     return chain.run(command=text_input)
 
-def parse_price_range(value):
-    pattern = r"(?P<prefix>\b(dưới|trên|từ|đến|khoảng)\s*)?(?P<number>\d+(?:,\d+)*)\s*(?P<unit>triệu|nghìn|tr|k)?\b"
+def value_str2int(value):
+    value = value.lower()
+    int_value = 0
+    for s in value:
+        if s.isdigit():
+            int_value = int_value*10 + int(s)
+    if 'triệu' in value:
+        int_value *= 1000000
+    if 'nghìn' in value or 'k' in value:
+        int_value *= 1000
 
-    min_price = 0
-    max_price = float('inf')
-    for match in re.finditer(pattern, value, re.IGNORECASE):
-        prefix = match.group('prefix') or ''
-        number = float(match.group('number').replace(',', ''))
-        unit = match.group('unit') or ''
-
-        if unit.lower() in ['triệu','tr']:
-            number *= 1000000
-        elif unit.lower() in ['nghìn','k']:
-            number *= 1000
-
-        if prefix.lower().strip() == 'dưới':
-            max_price = min(max_price, number)
-        elif prefix.lower().strip() == 'trên':
-            min_price = min(max_price, number)
-        elif prefix.lower().strip() == 'từ':
-            min_price = min(max_price, number)
-        elif prefix.lower().strip() == 'đến':
-            max_price = max(min_price, number)
-        else:  # Trường hợp không có từ khóa
-            min_price = number * 0.9
-            max_price = number * 1.1
-
-    if min_price == float('inf'):
-        min_price = 0
-    print('min_price, max_price:',min_price, max_price)
-    return min_price, max_price
-
+    return int_value
 
 def find_product(object, value):
     object = object.split(',')
 
     # change price of product from str to int
     min_price, max_price = parse_price_range(value)
+    print(min_price, max_price)
 
     # take product from DB
     
@@ -235,16 +219,14 @@ def find_product(object, value):
     for i in range(0,cnt):
         a = sorted(list_product[i], key = key_sort, reverse=True)
         sort_product.append(a)
-    
+
     # backtrack to find products that satisfy the condition
     result = []
-    if sort_product == []:
-        return result
     def BT(dem, sum):
-        if dem == cnt and sum <= max_price and sum >= min_price:
-            return True
         if sum > max_price or dem >= len(sort_product):
             return False
+        if dem == cnt and sum <= max_price and sum >= min_price:
+            return True
         for product in sort_product[dem]:
             check = BT(dem+1, sum+number_product[dem]*product[2])
             if check:
@@ -253,6 +235,7 @@ def find_product(object, value):
                 result.append(a)
                 return True
     BT(0, 0)
+
     return result
 
 def find_level(total_price, list_product):
@@ -268,23 +251,19 @@ def find_level(total_price, list_product):
                     ans.append('GÓI MUA SẮM MỨC 3')
                     result.append(ans)
                     continue
-                if data['THRESHOLD_1'][row] == 0:
+                price_level1 = int(data['THRESHOLD_1'][row].split('>')[1].strip().split('triệu')[0].strip())*1000000
+                price_level2 = int(data['THRESHOLD_2'][row].split('-')[0].strip().split(' ')[-1])*1000000
+                if total_price >= price_level1:
+                    ans.append(data['COMMISSION_1'][row])
+                    ans.append('GÓI MUA SẮM MỨC 1')
+                    ans[2] = data['VAT_PRICE_1'][row]
+                elif total_price >= price_level2:
+                    ans.append(data['COMMISSION_2'][row])
+                    ans.append('GÓI MUA SẮM MỨC 2')
+                    ans[2] = data['VAT_PRICE_2'][row]
+                else:
                     ans.append(0)
                     ans.append('GÓI MUA SẮM MỨC 3')
-                else:
-                    price_level1 = int(data['THRESHOLD_1'][row].split('>')[1].strip().split('triệu')[0].strip())*1000000
-                    price_level2 = int(data['THRESHOLD_2'][row].split('-')[0].strip().split(' ')[-1])*1000000
-                    if total_price >= price_level1:
-                        ans.append(data['COMMISSION_1'][row])
-                        ans.append('GÓI MUA SẮM MỨC 1')
-                        ans[2] = data['VAT_PRICE_1'][row]
-                    elif total_price >= price_level2:
-                        ans.append(data['COMMISSION_2'][row])
-                        ans.append('GÓI MUA SẮM MỨC 2')
-                        ans[2] = data['VAT_PRICE_2'][row]
-                    else:
-                        ans.append(0)
-                        ans.append('GÓI MUA SẮM MỨC 3')
                 
                 result.append(ans)
     return result
@@ -294,12 +273,11 @@ def take_product(text_input):
 
     t1 = time.time()
     # text nhu cau
-    out_text = 'Dựa trên yêu cầu của bạn:'
+    out_text = 'Dựa trên yêu cầu của anh/chị:'
     # get the satisfied product list
     list_input = split_sentences(text_input)[2:-2].split("'")
     list_product = []
     print('list_input', list_input)
-    obj_list = []
     for input in list_input:
         if len(input) < 4:
             continue
@@ -311,46 +289,65 @@ def take_product(text_input):
 
         out_text += '\n\t- {} với giá {}'.format(_object.replace("'", ""),_value.replace("'", ""))
 
-        for j in _object.split("'"):
-            s = j.strip()
-            if s == '' or s == ',':
-                continue
-            obj_list.append(s[2:].strip())
-
         product = find_product(_object, _value)
         for j in product:
             list_product.append(j)
     
-    print('check list_product:',list_product)
+    out_text += '\n\nĐể phù hợp với ngân sách và nhu cầu sử dụng của khách hàng, chúng tôi đề xuất sản phẩm sau:'
+    print(product)
     # product level calculation
     total_price = 0
     for product in list_product:
-        total_price += product[2]*product[4]
+        total_price = product[2]*product[3]
+    print('list_product:',list_product)
     list_value = find_level(total_price, list_product)
+    # embed to dict into list
+    list_key = ["product_code", "product_name", "product_price", "commission_saler", "amount", "commission_implementer", "level"]
+    
+    result = [{list_key[i]: row[i] for i in range(len(list_key))} for row in list_value]
 
-        
-    if len(list_value)>0:
-        # embed to dict into list
-        out_text += '\n\nĐể phù hợp với ngân sách và nhu cầu sử dụng của bạn, VCC Bot đề xuất sản phẩm sau:'
-        list_key = ["product_code", "product_name", "product_price", "commission_saler", "amount", "commission_implementer", "level"]
-        result = [{list_key[i]: row[i] for i in range(len(list_key))} for row in list_value]
-        total_price = 0
-        total_commission_saler = 0
-        total_commission_implementer = 0
-        for x in result:
-            out_text += '\n\t+ Với {} {}: {}VND - {}'.format(x['amount'],x['product_name'],x['product_price'],x['level'])
-            if int( x['commission_saler']) != 0 and int(x['commission_implementer']) != 0:
-                out_text += '\n\t\t(Hoa hòng bán hàng nhận được là: {}VND và hoa hồng triển khai nhận được là: {}VND)'.format(x['commission_saler'],x['commission_implementer'])
-            else:
-                out_text += '\n\t\t(Hiện tại không có chính sách hoa hồng cho sản phẩm này)'
-            # total prices
-            total_price += float(x['product_price'])
-            total_commission_saler += float(x['commission_saler'])
-            total_commission_implementer += float(x['commission_implementer'])
-        out_text += '\n\nTổng giá trị của gói sản phẩm này là {}VND, giúp bạn tiết kiệm và đáp ứng đầy đủ nhu cầu sử dụng.'.format(str(total_price))
-        out_text += '\nNếu có bất kỳ câu hỏi hoặc yêu cầu nào khác, vui lòng liên hệ với VCC Bot. VCC Bot luôn sẵn lòng hỗ trợ.'
-    else:
-        out_text += '\nTôi không thể đáp ứng yêu cầu của bạn.'
-        out_text += '\nNếu có bất kỳ câu hỏi hoặc yêu cầu nào khác, vui lòng liên hệ với VCC Bot. VCC Bot luôn sẵn lòng hỗ trợ.'
+    # # Ghi danh sách này vào file JSON
+    # with open("output.json", "w",encoding="utf-8") as json_file:
+    #     json.dump(json_data, json_file, indent=4, ensure_ascii=False)
+    total_price = 0
+    total_commission_saler = 0
+    total_commission_implementer = 0
+    for x in result:
+        out_text += '\n\t+ Với {} {}: {}VND - {}'.format(x['amount'],x['product_name'],x['product_price'],x['level'])
+        out_text += '\n\t\t(Hoa hòng bán hàng nhận được là: {}VND và hoa hồng triển khai nhận được là: {}VND)'.format(x['commission_saler'],x['commission_implementer'])
+        # total prices
+        total_price += float(x['product_price'])
+        total_commission_saler += float(x['commission_saler'])
+        total_commission_implementer += float(x['commission_implementer'])
+        #
+        # results = product_seeking(results = results, texts=x["product_name"])
+
+    out_text += '\n\nTổng giá trị của gói sản phẩm này là {}VND, giúp khách hàng tiết kiệm và đáp ứng đầy đủ nhu cầu sử dụng.'.format(str(total_price))
+    
+    out_text += '\nNếu có bất kỳ câu hỏi hoặc yêu cầu nào khác, vui lòng liên hệ với chúng tôi. Chúng tôi luôn sẵn lòng hỗ trợ.'
+    
+    # results['content'] = out_text
+    # results['time_processing'] = str(time.time()-t1)
+    
+    # print('out_text:',out_text)
+    # print('results:',results)
     
     return out_text
+
+
+# # code test
+# t1 = time.time()
+# results = {
+# "products" : [],
+# "terms" : [],
+# "content" : "",
+# "status" : 200,
+# "message": "",
+# "time_processing":''
+# }
+# print(take_product("tôi muốn mua Ghế massage daikiosan 10tr đến 20tr"))
+# print(time.time()-t1)
+
+# [509330, 'Bếp Từ Đôi Bluestone Icb-6833', 10125830.0, 571468.8000000002, 2, 92053, 'GÓI MUA SẮM MỨC 1']]
+# [mã sản phẩm, tên sản phẩm, giá theo mức, hoa hồng BH, số lượng, hoa hồng cho người triển khái,  mức]
+# [product_code,product_name,product_price,commission,amount,commission_implementer,level]

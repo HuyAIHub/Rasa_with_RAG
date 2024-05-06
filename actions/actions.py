@@ -4,10 +4,6 @@ from rasa_sdk.executor import CollectingDispatcher
 from rasa_sdk.events import UserUtteranceReverted
 from ChatBot_Extract_Intent.llm_predict import predict_llm
 import requests
-from ChatBot_Extract_Intent.config_app.config import get_config
-
-config_app = get_config()
-openai_api_key=config_app["parameter"]["openai_api_key"]
 
 class ExtractNameAction(Action):
 
@@ -32,56 +28,6 @@ class ExtractNameAction(Action):
 
         return []
 
-class ActionDefaultFallback(Action):
-    def name(self) -> Text:
-        return "action_default_fallback"
-
-    def run(
-        self,
-        dispatcher: CollectingDispatcher,
-        tracker: Tracker,
-        domain: Dict[Text, Any],) -> List[Dict[Text, Any]]:
-
-        # Lấy tin nhắn từ người dùng từ Rasa tracker
-        user_message = tracker.latest_message.get("text")
-
-        # Định nghĩa URL và các header cho yêu cầu đến API ChatGPT
-        url = "https://api.openai.com/v1/chat/completions"
-        headers = {
-            "Authorization": f"Bearer {openai_api_key}",
-            "Content-Type": "application/json",
-        }
-
-        # Định nghĩa dữ liệu cho yêu cầu đến API ChatGPT
-        data = {
-            "model": "gpt-3.5-turbo",
-            "messages": [
-                {
-                    "role": "user",
-                    "content": user_message,
-                }
-            ]
-        }
-        
-        # Gửi yêu cầu đến API ChatGPT
-        response = requests.post(url, headers=headers, json=data)
-        print(response)
-        # Xử lý phản hồi từ API ChatGPT
-        if response.status_code == 200:
-            chatgpt_response = response.json()
-            message = chatgpt_response["choices"][0]["message"]["content"]
-            dispatcher.utter_message(message)
-        else:
-            # Xử lý lỗi nếu có
-            dispatcher.utter_message("Xin lỗi, tôi không thể tạo phản hồi vào thời điểm này. Vui lòng thử lại sau.")
-
-            # Revert lại tin nhắn từ người dùng dẫn đến fallback
-            return [UserUtteranceReverted()]
-        
-# class productAPI(object):
-
-#     def __init__(self) -> None:
-#         self.db =
     
 class Actionseachproduct(Action):
     def name(self) -> Text:
@@ -93,10 +39,19 @@ class Actionseachproduct(Action):
         tracker: Tracker,
         domain: Dict[Text, Any], ) -> List[Dict[Text, Any]]:
         # Lấy tin nhắn từ người dùng từ Rasa tracker
-        user_message = tracker.latest_message.get("text")
+        user_message = tracker.latest_message.get("text").split(",")
+        print('user_message:',user_message)
+        result = {}
 
+        # Duyệt qua các cặp khóa-giá trị và thêm vào dict
+        for pair in user_message:
+            key, value = pair.split(":")
+            key = key.strip()  # Loại bỏ khoảng trắng
+            value = value.strip()  # Loại bỏ khoảng trắng
+            result[key] = value
+        print("result:",result)
         # Call the llm_predict function and retrieve its result
-        message = predict_llm(user_message, 'a', 'b', 'c', ' ')
+        message = predict_llm(result['InputText'],result['IdRequest'], result['NameBot'], result['User'])
 
         # You can now use the result as needed
         # print(f"Result from predict_llm: {result}")

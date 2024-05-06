@@ -23,7 +23,7 @@ config_app = get_config()
 
 faiss_index = load_and_index_pdf()
 
-def predict_llm(InputText, IdRequest, NameBot, User, log_obj):
+def predict_llm(InputText, IdRequest, NameBot, User):
     User = str(User)
     print("----------------NEW_SESSION--------------")
     print("GuildID  = ", IdRequest)

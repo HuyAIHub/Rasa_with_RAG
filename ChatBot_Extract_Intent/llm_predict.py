@@ -8,7 +8,7 @@ import datetime
 config_app = get_config()
 
 
-def predict_llm(InputText, IdRequest, NameBot, User, log_obj):
+def predict_llm(InputText, IdRequest, NameBot, User):
     User = str(User)
     print("----------------NEW_SESSION--------------")
     print("GuildID  = ", IdRequest)
@@ -21,7 +21,7 @@ def predict_llm(InputText, IdRequest, NameBot, User, log_obj):
 
     timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-    response = process_command(query_text,IdRequest,NameBot,User,log_obj)
+    response = process_command(query_text,IdRequest,NameBot,User)
     human_message = {
         "type": "human",
         "data": {

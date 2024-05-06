@@ -26,10 +26,13 @@ async def post(InputText: str = Form(None),
     "message": "",
     "time_processing":''
     }
-
+    message_data = '''InputText:{},IdRequest:{},NameBot:{},User:{}'''.format(InputText,IdRequest,NameBot,User)
+    
     # Ban len rasa
-    r = requests.post('http://127.0.0.1:5005/webhooks/rest/webhook', json={"sender": "test", "message": InputText})
-    print('r:',r.json())
+    print(message_data)
+    r = requests.post('http://127.0.0.1:5005/webhooks/rest/webhook', json={"sender": "test", "message": message_data})
+    
+    # print('r:',r.json())
     results['content'] = r.json()[0]["text"]
     
     return results['content']
