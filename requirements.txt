@@ -1,0 +1,3 @@
+conda activate langchain
+rasa run actions
+rasa run --enable-api

@@ -20,10 +20,17 @@ intents:
 - list_product
 - cancel_product
 - evaluate_product
-- policy_question
+- buy_dont_money
+- warranty_policy_1
+- warranty_policy_2
+- warranty_policy_1vs1
+- warranty_policy_bark
 entities:
 - user_name
+- produce_name_policy
 responses:
+  utter_buy_dont_money:
+  - text: Thông tin ngữ cảnh không cung cấp chi tiết cụ thể về việc có thể mua hàng mà không phải trả tiền hay không. Tuy nhiên, nhìn chung, khi mua sắm trực tuyến, việc thanh toán là bắt buộc để hoàn tất giao dịch mua. Nếu bạn có câu hỏi cụ thể về các tùy chọn thanh toán hoặc nếu có bất kỳ chương trình khuyến mãi hoặc giảm giá nào, vui lòng cho tôi biết và tôi sẽ cố gắng hết sức để hỗ trợ bạn.
   utter_evaluate_product:
   - text: Tôi xin lỗi nếu có bất kỳ sự không hài lòng nào về sản phẩm của chúng tôi. Chúng tôi luôn cố gắng cung cấp những sản phẩm chất lượng và đảm bảo sự hài lòng của khách hàng. Nếu bạn có bất kỳ vấn đề nào với sản phẩm, vui lòng liên hệ với nhân viên hỗ trợ khách hàng của chúng tôi để được giúp đỡ và hỗ trợ.
   utter_greet:
@@ -41,7 +48,7 @@ responses:
       Rất vui được giúp bạn!
       Nếu bạn có bất kỳ câu hỏi hoặc yêu cầu nào khác, hãy để tôi biết. Tôi sẽ cố gắng giúp bạn trong khả năng của mình. Chúc bạn có một trải nghiệm mua sắm tuyệt vời!
   utter_birthday:
-  - text: Tôi không có ngày sinh như con người. Tôi là một trợ lý ảo được tạo ra bởi VCC, với mục đích là cung cấp hỗ trợ và thông tin cho mọi người. Tuy nhiên, nếu bạn muốn biết, tôi đã được phát triển và ra mắt vào năm 2023.
+  - text: Tôi không có ngày sinh như con người. Tôi là một trợ lý ảo được tạo ra bởi VCC, với mục đích là cung cấp hỗ trợ và thông tin cho mọi người. Tuy nhiên, nếu bạn muốn biết, tôi đã được phát triển và ra mắt vào năm 2024.
   utter_question_offen_met:
   - text: |-
       Dưới đây là một số câu hỏi phổ biến mà người dùng thường đặt khi mua sắm:
@@ -102,13 +109,17 @@ responses:
       Tôi có thể giúp bạn tìm kiếm sản phẩm, đặt hàng và trả lời các câu hỏi liên quan đến mua sắm. Bạn có thể hỏi về các sản phẩm cụ thể, thông tin về giá cả, chất lượng sản phẩm, hoặc bất kỳ câu hỏi nào liên quan đến dịch vụ. Hãy cho tôi biết nếu bạn có bất kỳ câu hỏi nào khác!
   utter_change_product:
   - text: |-
-      Có, bạn có thể đổi/trả sản phẩm nếu không hài lòng. VCC có chính sách đổi trả hàng trong vòng 30 ngày miễn phí. Điều kiện để đổi/trả hàng bao gồm:
-        1. Sản phẩm còn nguyên tình trạng như khi nhận, hộp và bao bì còn đầy đủ và nguyên vẹn, sản phẩm chưa qua sử dụng, còn nguyên tem, mác hay niêm phong của nhà sản xuất (nếu có).
-        2. Còn đầy đủ phụ kiện, phiếu bảo hành cùng quà tặng kèm theo (nếu có) và chưa qua sử dụng.
-        3. Sản phẩm chưa được kích hoạt bảo hành điện tử.
-        4. Sản phẩm không thanh toán bằng hình thức trả góp.
-        5. Sản phẩm không nằm trong danh mục hạn chế đổi trả.
-        6. Vui lòng liên hệ VCC để được hỗ trợ thêm chi tiết và thực hiện đổi/trả sản phẩm.
+      Có, bạn có thể đổi/trả sản phẩm nếu không hài lòng. VCC có chính sách đổi trả hàng bao gồm:
+         1. Thời gian áp dụng
+        - Một đổi một trong vòng 7 ngày kể từ ngày khách hàng mua hàng, căn cứ theo biên bản nghiệm thu và đơn hàng được đóng thành công trên hệ thống AIO.
+        - Chi phí bảo hành nằm trong 0.5% chi phí giá bán theo quy định TCT.
+        2. Điều kiện:
+        - Áp dụng bảo hành đối với các sản phẩm lỗi nằm trong quy định và điều kiện bảo hành 1 đổi 1 của VCC.
+        - Sản phẩm đổi trả phải giữ nguyên 100% hình dạng ban đầu (không bị trầy xước, bể, vỡ, móp méo).
+        - Hoàn trả lại đầy đủ hộp đựng, phụ kiện đi kèm và các hàng khuyến mãi(nếu có)
+        - Lỗi được xác nhận bởi nhân sự triển khai tại CNCT, áp dụng theo hướng dẫn kiểm tra sản phẩm bảo hành do TT. GP&DVKT
+        - Số điện thoại mua sản phẩm trùng khớp với dữ liệu trên hệ thống ghi nhận.
+        Lưu ý: Không áp dụng hoàn tiền sản phẩm
   utter_cancel_product:
   - text: Có, bạn có thể hủy đơn hàng sau khi đã đặt. Để hủy đơn hàng, bạn cần đăng nhập vào tài khoản của mình
   utter_order_from_overseas:
@@ -122,22 +133,47 @@ responses:
         Thiết bị gia đình: Ghế massage Daikiosan, Máy giặt, Máy sấy, Máy lọc không khí - Máy hút bụi, Máy lọc nước, Robot hút bụi
         Công nghệ & Tiện ích: Thiết bị Wifi, Đèn năng lượng mặt trời
         Khác: Thiết bị gia dụng
-  utter_question_policy:
+  utter_warranty_policy_1:
   - text: |-
-      Chính sách bảo hành tại VCC có các điểm sau đây:
-
-        - Quý khách có thể bảo hành sản phẩm trực tiếp tại hãng hoặc thông qua VCC.
-        - Sản phẩm được bảo hành miễn phí chính hãng khi còn thời hạn bảo hành, tem/phiếu bảo hành còn nguyên vẹn và sản phẩm bị lỗi kỹ thuật.
-        - Có thể phát sinh phí bảo hành khi sản phẩm hết thời hạn bảo hành hoặc bị hư hỏng không do lỗi kỹ thuật.
-        - VCC không hỗ trợ bảo hành quà tặng đi kèm sản phẩm chính.
-        - Thời gian bảo hành dự kiến khi gửi hàng về VCC là từ 15-30 ngày, tùy thuộc vào điều kiện linh kiện thay thế và loại sản phẩm.
-        - Đối với sản phẩm của Apple, thời gian hoàn tất bảo hành dự kiến từ 30 đến 60 ngày.
+      Chính sách bảo hành sản phẩm của chúng tôi bao gồm:
+        1. Chính sách bảo hành 1 đổi 1
+        2. Chính sách bảo hành sửa chữa, thay thế linh kiện
+      Nếu muốn biết thông tin chi tiết của từng chính sách bạn có thể hỏi tôi cụ thể hơn.
       Lưu ý: Để đảm bảo quyền lợi khách hàng và VCC có cơ sở làm việc với các bộ phận liên quan, quý khách cần cung cấp hình ảnh/clip sản phẩm lỗi khi yêu cầu bảo hành.
-
+  utter_warranty_policy_1vs1:
+  - text: |-
+      Chính sách 1 đổi 1:
+        1. Thời gian áp dụng
+        - Một đổi một trong vòng 7 ngày kể từ ngày khách hàng mua hàng, căn cứ theo biên bản nghiệm thu và đơn hàng được đóng thành công trên hệ thống AIO.
+        - Chi phí bảo hành nằm trong 0.5% chi phí giá bán theo quy định TCT.
+        2. Điều kiện:
+        - Áp dụng bảo hành đối với các sản phẩm lỗi nằm trong quy định và điều kiện bảo hành 1 đổi 1 của VCC.
+        - Sản phẩm đổi trả phải giữ nguyên 100% hình dạng ban đầu (không bị trầy xước, bể, vỡ, móp méo).
+        - Hoàn trả lại đầy đủ hộp đựng, phụ kiện đi kèm và các hàng khuyến mãi(nếu có)
+        - Lỗi được xác nhận bởi nhân sự triển khai tại CNCT, áp dụng theo hướng dẫn kiểm tra sản phẩm bảo hành do TT. GP&DVKT
+        - Số điện thoại mua sản phẩm trùng khớp với dữ liệu trên hệ thống ghi nhận.
+        Lưu ý: Không áp dụng hoàn tiền sản phẩm
+  utter_warranty_policy_bark:
+  - text: |-
+      Chính sách bảo hành sửa chữa, thay thế linh kiện:
+        1. Thời gian
+        - Áp dụng 12 tháng kể từ ngày khách hàng mua sản phẩm, căn cứ theo biên
+        bản nghiệm thu và đơn hàng được đóng thành công trên hệ thống AIO.
+        2. Phạm vi
+        - Áp dụng cho các lỗi kỹ thuật do nhà sản xuất (theo danh mục lỗi nhà sản
+        xuất quy định với từng sản phẩm).
+        - Không bảo hành đối với các trường hợp do sử dụng, sửa chữa không đúng
+        cách hoặc hỏng hóc do nguyên nhân bên ngoài.
+        3. Điều kiện được bảo hành
+        - Lỗi được xác nhận và kiểm tra bởi nhân sự triển khai tại các CNCT, căn cứ
+        theo Quy trình bảo hành số QT.VCC.RRR.2.2-(02) và hướng dẫn kiểm tra sản
+        phẩm bảo hành do TT. GP&DVKT ban hành.
+        - Số điện thoại mua sản phẩm trùng khớp với dữ liệu trên hệ thống ghi nhận.
 actions:
 - action_extract_name
 # - action_default_fallback
 - action_search_product
+- action_extract_produce
 session_config:
   session_expiration_time: 60
   carry_over_slots_to_new_session: true

@@ -118,5 +118,25 @@ stories:
 
 - story: path19
   steps:
-  - intent: policy_question
-  - action: utter_question_policy
+  - intent: buy_dont_money
+  - action: utter_buy_dont_money
+
+- story: path20
+  steps:
+  - intent: warranty_policy_1
+  - action: utter_warranty_policy_1
+
+- story: path21
+  steps:
+  - intent: warranty_policy_1vs1
+  - action: utter_warranty_policy_1vs1
+
+- story: path22
+  steps:
+  - intent: warranty_policy_bark
+  - action: utter_warranty_policy_bark
+
+- story: path23
+  steps:
+   - intent: warranty_policy_2
+   - action: action_extract_produce

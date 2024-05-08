@@ -2,7 +2,7 @@ from typing import Any, Text, Dict, List
 from rasa_sdk import Action, Tracker
 from rasa_sdk.executor import CollectingDispatcher
 from rasa_sdk.events import UserUtteranceReverted
-from ChatBot_Extract_Intent.llm_predict import predict_llm
+from chat import predict_rasa_llm
 import requests
 
 class ExtractNameAction(Action):
@@ -51,7 +51,7 @@ class Actionseachproduct(Action):
             result[key] = value
         print("result:",result)
         # Call the llm_predict function and retrieve its result
-        message = predict_llm(result['InputText'],result['IdRequest'], result['NameBot'], result['User'])
+        message = predict_rasa_llm(result['InputText'],result['IdRequest'], result['NameBot'], result['User'],type = 'llm')
 
         # You can now use the result as needed
         # print(f"Result from predict_llm: {result}")

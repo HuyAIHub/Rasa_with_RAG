@@ -154,8 +154,9 @@ nlu:
   examples: |
     - nhà em ở đâu?
     - mày ở đâu?
-    - nha fem chỗ nào?
+    - nhà em chỗ nào?
     - quê em ở đâu?
+    - ở đâu
 - intent: unclear
   examples: |
     - jjjjjjjjj
@@ -201,6 +202,24 @@ nlu:
     - Dịch câu này sang tiếng Anh
     - Tìm cho tôi một nhà hàng Ý gần đây.
     - Ý nghĩa của cuộc sống là gì?
+    - Ai là người giàu nhất thế giới?
+    - Ai là người đẹp nhất?
+    - Bạn có thể nói cho tôi về cuộc sống của bạn không?
+    - Bạn có thể kể một câu chuyện cho tôi nghe không?
+    - Bạn thích ăn gì?
+    - Bạn có thể làm thơ cho tôi không?
+    - Bạn có biết tôi đang ở đâu không?
+    - Bạn có thể hát một bài hát cho tôi nghe không?
+    - Bạn có thể tán tỉnh tôi không?
+    - Bạn nghĩ gì về tình yêu?
+    - Bạn thích đi du lịch không?
+    - Bạn đã từng phải làm việc quá giờ chưa?
+    - Bạn có thể nói cho tôi về thời tiết hôm nay không?
+    - Bạn có thể kể cho tôi một câu chuyện ngắn không?
+    - Bạn có thể tư vấn cho tôi một bộ phim hay không?
+    - Bạn có thể đoán tuổi của tôi không?
+    - Bạn có thể nói cho tôi một câu đố không?
+    - có biết chơi game không
 - intent: deny
   examples: |
     - no
@@ -322,7 +341,13 @@ nlu:
     - cảm ơn em
 - intent: ask_name
   examples: |
+    - bạn là ai
+    - mày là đứa nào
+    - bạn tên là gì
+    - tên gì
     - ban ten gi?
+    - mày ten gì
+    - mày là ai?
     - ban ten la gi?
     - bạn tên gì
     - tên gì
@@ -423,6 +448,12 @@ nlu:
     - Sản phẩm này có thể trả lại được không?
     - toi co the doi tra san pham duoc khong
     - anh co the doi tra san pham nay duoc khong?
+    - trả sản phẩm
+    - đổi sản phẩm
+    - mình cần đổi sản phẩm này
+    - sản phẩm này đổi được không
+    - có trả hàng được không
+
 - intent: begin_chatgpt
   examples: |
     - Ai là người giàu nhất thế giới?
@@ -437,6 +468,11 @@ nlu:
     - Tôi cần làm gì để hủy đơn hàng?
     - toi can lam gi de huy don hang
     - Cách thức để hủy đơn hàng
+    - hủy dơn hàng
+    - làm sao để hủy đơn hàng
+    - tôi cần hủy đơn
+    - đơn hàng này hủy được không
+    - cách nào đẻ hủy đơn hàng này
 - intent: order_from_overseas
   examples: |
     - Tôi có thể đặt hàng từ nước ngoài không?
@@ -444,6 +480,8 @@ nlu:
     - có thể đặt hàng sang nước khác không
     - ở nước khác mà muốn đặt hàng có được không
     - Tôi muốn đặt hàng sang nươc ngoài có được không
+    - đặt hàng sang nước khác được không
+    - từ nước khách cúa mua được san phẩm hay không
 - intent: list_product
   examples: |
     - Danh mục sản phẩm của VCC có những gì?
@@ -455,6 +493,23 @@ nlu:
     - Mặt hàng nào VCC đang kinh doanh?
     - có những sản phẩm nào
     - co nhung san pham nao
+    - cho xem sản phẩm
+    - cho anh xem sản phẩm
+    - danh sách sản phẩm
+    - bên bạn có những sản phẩm nào
+    - có bán điều hòa không
+    - có bán máy giặt không
+    - bàn là bên bạn có bán khộng
+    - bếp từ bên bạn có bán không
+    - bên bạn có bán máy lọc nước không
+    - có bán tivi không
+    - có bán máy bay không
+    - có bán bàn ghế không
+    - bán điều hòa không
+    - bán những cái gì
+    - tôi cần mua bình nóng lạnh
+    - muốn mua webcam
+    - muốn mua tivi
 - intent: evaluate_product
   examples: |
     - Sản phẩm bên bạn không tốt
@@ -469,8 +524,37 @@ nlu:
     - sản phẩm kém chất lượng thế
     - sản phẩm bị hỏng
     - sản phẩm lỗi
-- intent: policy_question
+    - mặt hàng kém chất lượng
+    - san phẩm khong đảm bảo
+    - sản phẩm không giống hình ảnh
+    - sản phẩm không giống quảng cáo
+    - sản phẩm không đúng với mô tả
+    - kém chất lượng
+    - sản phảm không đúng yêu cầu
+    - sản phẩm nhanh hỏng
+    - sản phẩm dễ hỏng
+    - sản phẫm lõi
+- intent: buy_dont_money
   examples: |
+    - mua san phẩm không cần trả tiền được không
+    - tôi mua sản phẩm mà không trả tiền được không
+    - mua sản phẩm nhưng không thanh toán được không
+    - không thanh toán khi mua sản phẩm
+    - không trả tiền được không
+    - không trả tiền
+    - sản phẩm không cần trả tiền đâu nhỉ?
+- intent: warranty_policy_1
+  examples: |
+    - bên bạn có những chính sách bảo hành nào
+    - có những chính sách bảo hành nào
+    - chính sách bảo hành
+    - bảo hành
+    - có bảo hành không
+    - cho xem chính sách bảo hành
+    - anh muốn xem chính sách bảo hành
+    - tôi cần chính sách bảo hành
+    - chính sách bảo hành
+    - sản phẩm bên bạn có chính sách bảo hành không
     - Chính sách bảo hành bên bạn là gì
     - Xin vui lòng cho biết chính sách bảo hành của bạn áp dụng cho sản phẩm này?
     - Thời hạn bảo hành của sản phẩm này là bao lâu?
@@ -482,4 +566,243 @@ nlu:
     - Nếu sản phẩm không thể sửa chữa, liệu tôi sẽ được đổi sản phẩm mới theo chính sách bảo hành?
     - Chính sách bảo hành của bạn có điều khoản nào đặc biệt mà tôi cần lưu ý?
     - Tôi có thể gia hạn thời gian bảo hành cho sản phẩm này không? Nếu có, thủ tục như thế nào?
-
+- intent: warranty_policy_2
+  examples: |
+    - Sản phẩm [điều hòa](produce_name_policy) bên bạn có chính sách bảo hành không?
+    - Sản phẩm [bếp từ](produce_name_policy) bên bạn có chính sách bảo hành không?
+    - Sản phẩm [máy lọc nước](produce_name_policy) bên bạn có chính sách bảo hành không?
+    - Sản phẩm [bàn chải điện](produce_name_policy) bên bạn có chính sách bảo hành không?
+    - Sản phẩm [bếp từ](produce_name_policy) bên bạn có chính sách bảo hành không?
+    - Sản phẩm [bình đun nước](produce_name_policy) bên bạn có chính sách bảo hành không?
+    - Sản phẩm [bình nóng lạnh](produce_name_policy) bên bạn có chính sách bảo hành không?
+    - Sản phẩm [đen năng lượng mặt trời](produce_name_policy) bên bạn có chính sách bảo hành không?
+    - Sản phẩm [ghế massage daikiosan](produce_name_policy) bên bạn có chính sách bảo hành không?
+    - Sản phẩm [lò vi sóng](produce_name_policy) bên bạn có chính sách bảo hành không?
+    - Sản phẩm [máy cạo râu](produce_name_policy) bên bạn có chính sách bảo hành không?
+    - Sản phẩm [máy đánh trứng](produce_name_policy) bên bạn có chính sách bảo hành không?
+    - Sản phẩm [máy ép](produce_name_policy) bên bạn có chính sách bảo hành không?
+    - Sản phẩm [máy giặt](produce_name_policy) bên bạn có chính sách bảo hành không?
+    - Sản phẩm [máy hút bụi nước](produce_name_policy) bên bạn có chính sách bảo hành không?
+    - Sản phẩm [máy lọc không khí](produce_name_policy) bên bạn có chính sách bảo hành không?
+    - Sản phẩm [máy sấy tóc](produce_name_policy) bên bạn có chính sách bảo hành không?
+    - Sản phẩm [máy xay](produce_name_policy) bên bạn có chính sách bảo hành không?
+    - Sản phẩm [nồi áp suất](produce_name_policy) bên bạn có chính sách bảo hành không?
+    - Sản phẩm [nòi chiên không dầu](produce_name_policy) bên bạn có chính sách bảo hành không?
+    - Sản phẩm [nồi cơm điện](produce_name_policy) bên bạn có chính sách bảo hành không?
+    - Sản phẩm [robot hút bụi](produce_name_policy) bên bạn có chính sách bảo hành không?
+    - Sản phẩm [thiết bị camera](produce_name_policy) bên bạn có chính sách bảo hành không?
+    - Sản phẩm [thiết bị webcam](produce_name_policy) bên bạn có chính sách bảo hành không?
+    - Sản phẩm [thiết bị wifi](produce_name_policy) bên bạn có chính sách bảo hành không?
+    - Sản phẩm [lò nướng](produce_name_policy) bên bạn có chính sách bảo hành không?
+    - Sản phẩm [bỉm](produce_name_policy) bên bạn có chính sách bảo hành không?
+    - Sản phẩm [dép lê](produce_name_policy) bên bạn có chính sách bảo hành không?
+    - Sản phẩm [cốc](produce_name_policy) bên bạn có chính sách bảo hành không?
+    - Sản phẩm [xe máy](produce_name_policy) bên bạn có chính sách bảo hành không?
+    - Sản phẩm [người](produce_name_policy) bên bạn có chính sách bảo hành không?
+    - Sản phẩm [điện thoại](produce_name_policy) bên bạn có chính sách bảo hành không?
+    - Sản phẩm [máy tính xách tay](produce_name_policy) bên bạn có chính sách bảo hành không?
+    - Sản phẩm [máy tính cầm tay không dây](produce_name_policy) bên bạn có chính sách bảo hành không?
+    - [bàn là](produce_name_policy) có được bảo hành không
+    - [điều hòa](produce_name_policy) có được bảo hành không
+    - [máy giặt](produce_name_policy) có được bảo hành không
+    - [bếp từ](produce_name_policy) có được bảo hành không
+    - [bàn chải điện](produce_name_policy) có được bảo hành không
+    - [bàn là](produce_name_policy) có được bảo hành không
+    - [bình đun nước](produce_name_policy) có được bảo hành không
+    - [bình nóng lạnh](produce_name_policy) có được bảo hành không
+    - [đèn năng lượng mặt trời](produce_name_policy) có được bảo hành không
+    - [ghế massage daikiosan](produce_name_policy) có được bảo hành không
+    - [lò vi sóng](produce_name_policy) có được bảo hành không
+    - [máy cạo râu](produce_name_policy) có được bảo hành không
+    - [máy đánh trứng](produce_name_policy) có được bảo hành không
+    - [máy ép](produce_name_policy) có được bảo hành không
+    - [máy giặt](produce_name_policy) có được bảo hành không
+    - [máy hút bụi](produce_name_policy) có được bảo hành không
+    - [máy lọc không khí](produce_name_policy) có được bảo hành không
+    - [máy lọc nước](produce_name_policy) có được bảo hành không
+    - [máy sấy tóc](produce_name_policy) có được bảo hành không
+    - [máy xay](produce_name_policy) có được bảo hành không
+    - [nồi áp suất](produce_name_policy) có được bảo hành không
+    - [nồi chiên không dầu](produce_name_policy) có được bảo hành không
+    - [nồi cơm điện](produce_name_policy) có được bảo hành không
+    - [robot hút bụi](produce_name_policy) có được bảo hành không
+    - [thiết bị webcam](produce_name_policy) có được bảo hành không
+    - [thiết bị camera](produce_name_policy) có được bảo hành không
+    - [thiết bị wifi](produce_name_policy) có được bảo hành không
+    - [lò nướng(produce_name_policy) có được bảo hành không
+    - [bỉm](produce_name_policy) có được bảo hành không
+    - [tên lửa nước](produce_name_policy) có được bảo hành không
+    - [điều hòa](produce_name_policy) có chính sách bảo hành không
+    - [máy giặt](produce_name_policy) có bảo hành không
+    - [Bếp từ](produce_name_policy) có bảo hành không
+    - [Bỉm](produce_name_policy) có bảo hành không
+    - [tivi](produce_name_policy) có bảo hành không
+    - [tủ lạnh](produce_name_policy) có bảo hành không
+    - [máy xay sinh tố](produce_name_policy) có bảo hành không
+    - chính sách bảo hành của [Bếp từ](produce_name_policy)
+    - chính sách bảo hành của [bình nóng lạnh](produce_name_policy)
+    - chính sách bảo hành của [bàn là](produce_name_policy)
+    - chính sách bảo hành của [Bỉm](produce_name_policy)
+    - chính sách bảo hành của [thiết bị camera](produce_name_policy)
+    - bảo hành [Bỉm](produce_name_policy)
+    - bảo hành [bình đun nước](produce_name_policy)
+    - bảo hành [bàn là](produce_name_policy)
+    - bảo hành [Bàn chải điện](produce_name_policy)
+    - [điều hòa](produce_name_policy) có bảo hành không?
+    - [bếp từ](produce_name_policy) có bảo hành không?
+    - [máy lọc nước](produce_name_policy) có bảo hành không?
+    - [bàn chải điện](produce_name_policy) có bảo hành không?
+    - [bếp từ](produce_name_policy) có bảo hành không?
+    - [bình đun nước](produce_name_policy) có bảo hành không?
+    - [bình nóng lạnh](produce_name_policy) có bảo hành không?
+    - [đen năng lượng mặt trời](produce_name_policy) có bảo hành không?
+    - [ghế massage daikiosan](produce_name_policy) có bảo hành không?
+    - [lò vi sóng](produce_name_policy) có bảo hành không?
+    - [máy cạo râu](produce_name_policy) có bảo hành không?
+    - [máy đánh trứng](produce_name_policy) có bảo hành không?
+    - [máy ép](produce_name_policy) có bảo hành không?
+    - [máy giặt](produce_name_policy) có bảo hành không?
+    - [máy hút bụi nước](produce_name_policy) có bảo hành không?
+    - [máy lọc không khí](produce_name_policy) có bảo hành không?
+    - [máy sấy tóc](produce_name_policy) có bảo hành không?
+    - [máy xay](produce_name_policy) có bảo hành không?
+    - [nồi áp suất](produce_name_policy) có bảo hành không?
+    - [nòi chiên không dầu](produce_name_policy) có bảo hành không?
+    - [nồi cơm điện](produce_name_policy) có bảo hành không?
+    - [robot hút bụi](produce_name_policy) có bảo hành không?
+    - [thiết bị camera](produce_name_policy) có bảo hành không?
+    - [thiết bị webcam](produce_name_policy) có bảo hành không?
+    - [thiết bị wifi](produce_name_policy) có bảo hành không?
+    - [lò nướng](produce_name_policy) có bảo hành không?
+    - [bỉm](produce_name_policy) có bảo hành không?
+    - [bánh](produce_name_policy) có bảo hành không?
+    - [dép lê](produce_name_policy) có bảo hành không?
+    - [cốc](produce_name_policy) có bảo hành không?
+    - [xe máy](produce_name_policy) có bảo hành không?
+    - [người](produce_name_policy) có bảo hành không?
+    - [điện thoại](produce_name_policy) có bảo hành không?
+    - [máy tính xách tay](produce_name_policy) có bảo hành không?
+    - [máy tính cầm tay không dây](produce_name_policy) có bảo hành không?
+    - Bảo hành [điều hòa](produce_name_policy) 
+    - Bảo hành [bếp từ](produce_name_policy) 
+    - Bảo hành [máy lọc nước](produce_name_policy) 
+    - Bảo hành [bàn chải điện](produce_name_policy) 
+    - Bảo hành [bếp từ](produce_name_policy) 
+    - Bảo hành [bình đun nước](produce_name_policy) 
+    - Bảo hành [bình nóng lạnh](produce_name_policy) 
+    - Bảo hành [đen năng lượng mặt trời](produce_name_policy) 
+    - Bảo hành [ghế massage daikiosan](produce_name_policy) 
+    - Bảo hành [lò vi sóng](produce_name_policy) 
+    - Bảo hành [máy cạo râu](produce_name_policy) 
+    - Bảo hành [máy đánh trứng](produce_name_policy) 
+    - Bảo hành [máy ép](produce_name_policy) 
+    - Bảo hành [máy giặt](produce_name_policy) 
+    - Bảo hành [máy hút bụi nước](produce_name_policy) 
+    - Bảo hành [máy lọc không khí](produce_name_policy) 
+    - Bảo hành [máy sấy tóc](produce_name_policy) 
+    - Bảo hành [máy xay](produce_name_policy) 
+    - Bảo hành [nồi áp suất](produce_name_policy) 
+    - Bảo hành [nòi chiên không dầu](produce_name_policy) 
+    - Bảo hành [nồi cơm điện](produce_name_policy) 
+    - Bảo hành [robot hút bụi](produce_name_policy) 
+    - Bảo hành [thiết bị camera](produce_name_policy) 
+    - Bảo hành [thiết bị webcam](produce_name_policy) 
+    - Bảo hành [thiết bị wifi](produce_name_policy) 
+    - Bảo hành [lò nướng](produce_name_policy) 
+    - Bảo hành [bỉm](produce_name_policy) 
+    - Bảo hành [dép lê](produce_name_policy) 
+    - Bảo hành [cốc](produce_name_policy) 
+    - Bảo hành [xe máy](produce_name_policy) 
+    - Bảo hành [người](produce_name_policy) 
+    - Bảo hành [điện thoại](produce_name_policy) 
+    - Bảo hành [máy tính xách tay](produce_name_policy) 
+    - Bảo hành [máy tính cầm tay không dây](produce_name_policy) 
+    - Bảo hành [chậu cây](produce_name_policy)
+    - Bảo hành [ô tô](produce_name_policy)
+    - Bảo hành [bánh](produce_name_policy)
+    - [máy ép trái cây](produce_name_policy) có bảo hành không?
+    - [máy hâm sữa](produce_name_policy) có bảo hành không?
+    - [máy pha cà phê](produce_name_policy) có bảo hành không? 
+    - [cửa cuốn](produce_name_policy) có bảo hành không? 
+    - [chuột](produce_name_policy) có bảo hành không? 
+    - tôi muốn bảo hành [đồng hồ](produce_name_policy)
+    - tôi muốn bảo hành [tôi](produce_name_policy)
+    - tôi muốn bảo hành [người](produce_name_policy)
+    - tôi muốn bảo hành [](produce_name_policy)
+    - tôi muốn bảo hành [dao](produce_name_policy)
+    - tôi muốn bảo hành [lá cây](produce_name_policy)
+    - tôi muốn bảo hành [bát](produce_name_policy)
+    - tôi muốn bảo hành [xe điện](produce_name_policy)
+ 
+- intent: warranty_policy_1vs1
+  examples: |
+    - Chính sách bảo hành 1 đổi 1
+    - tôi muốn biết cụ thể chính sách 1 đổi 1
+    - chính sách 1 đổi 1
+    - bảo hành 1 đổi 1
+    - chi tiết chính sách 1 đỏi 1
+    - 1 đổi 1
+    - hãy cho tôi biết chính sách 1 đổi 1
+    - Sản phẩm của bạn có chính sách đổi trả không?
+    - Tôi muốn biết về chính sách đổi sản phẩm 1 đổi 1 của cửa hàng.
+    - Có bao lâu tôi có thể đổi trả sản phẩm sau khi mua?
+    - Chính sách đổi trả của bạn áp dụng như thế nào?
+    - Nếu tôi không hài lòng với sản phẩm, tôi có thể đổi trả không?
+    - Tôi muốn biết về quy định đổi trả trong trường hợp sản phẩm bị lỗi.
+    - Có bất kỳ chi phí nào liên quan đến quá trình đổi trả không?
+    - Chính sách đổi trả của bạn có áp dụng cho tất cả sản phẩm không?
+    - Tôi cần biết về điều kiện và điều khoản của chính sách đổi trả.
+    - Nếu tôi muốn đổi sản phẩm, tôi cần mang theo gì?
+    - Có bất kỳ hạn chế nào về thời gian đổi trả sản phẩm không?
+    - Chính sách đổi trả của bạn áp dụng cho hàng giảm giá không?
+    - Tôi muốn biết liệu tôi có thể đổi trả sản phẩm mua từ cửa hàng trực tuyến không?
+    - Nếu sản phẩm không hoạt động đúng cách, tôi phải làm gì để đổi trả?
+    - Tôi cần biết về quy trình đổi trả hàng hóa tại cửa hàng của bạn.
+    - Chính sách đổi trả có áp dụng cho sản phẩm đã qua sử dụng không?
+    - Tôi có thể đổi sản phẩm mua trong chương trình khuyến mãi không?
+    - Nếu tôi không giữ lại hóa đơn, tôi vẫn có thể đổi trả sản phẩm được không?
+    - Tôi muốn biết liệu tôi có thể đổi trả sản phẩm sau khi đã sử dụng một thời gian không?
+    - Có mất phí nào cho việc đổi trả sản phẩm không?
+    - Tôi muốn biết thêm về điều kiện đổi trả cho sản phẩm bán dưới dạng gói quà tặng.
+    - Nếu tôi mua sản phẩm trực tuyến và muốn đổi trả tại cửa hàng, có được không?
+    - Chính sách đổi trả có áp dụng cho sản phẩm mua từ các nhà cung cấp bên thứ ba không?
+    - Tôi muốn biết liệu tôi có thể đổi trả sản phẩm nếu tôi mua nhầm kích thước không?
+    - Tôi cần biết về quy định đổi trả khi mua sản phẩm trong các sự kiện đặc biệt hoặc khuyến mãi.
+    - Nếu sản phẩm tôi mua bị hỏng sau một thời gian, tôi có quyền đổi trả không?
+    - Có bất kỳ điều kiện nào đặc biệt mà tôi cần biết trước khi đổi trả sản phẩm không?
+    - Tôi muốn biết liệu tôi có thể đổi trả sản phẩm nếu tôi đã mở hộp và sử dụng một phần của nó không?
+    - Tôi muốn biết về quy trình và thời gian xử lý khi tôi yêu cầu đổi trả sản phẩm.
+- intent: warranty_policy_bark
+  examples: |
+    - chính sách sửa chữa
+    - chính sách thay thế linh kiện
+    - sửa chữa và thay thế linh kiện
+    - bảo hành sửa chữa
+    - bảo hành thay thế linh kiện
+    - chính sách baỏ hành và sửa chữa
+    - Chính sách bảo hành sửa chữa, thay thế linh kiện
+    - Chính sách bảo hành của bạn áp dụng trong bao lâu?
+    - Tôi muốn biết về điều kiện và điều khoản của chính sách bảo hành của bạn.
+    - Có bất kỳ loại hỏng hóc hoặc sự cố cụ thể nào được bảo hành không?
+    - Tôi muốn biết về quy trình bảo hành khi sản phẩm của tôi gặp sự cố.
+    - Nếu sản phẩm của tôi cần sửa chữa, quy trình sửa chữa như thế nào?
+    - Chính sách bảo hành của bạn áp dụng cho tất cả sản phẩm không?
+    - Tôi muốn biết về quy định bảo hành khi mua sản phẩm từ các kênh phân phối khác nhau (trực tuyến, cửa hàng, qua đại lý, v.v.).
+    - Có cần đăng ký sản phẩm để được hưởng chính sách bảo hành không?
+    - Tôi có thể sửa chữa sản phẩm của mình tại cửa hàng của bạn không?
+    - Có bất kỳ chi phí nào liên quan đến việc sửa chữa hoặc thay thế linh kiện không?
+    - Chính sách bảo hành của bạn bao gồm thay thế linh kiện không?
+    - Nếu sản phẩm không thể được sửa chữa, tôi có thể nhận được sản phẩm thay thế không?
+    - Tôi muốn biết về thời gian xử lý khi tôi yêu cầu bảo hành hoặc sửa chữa.
+    - Có bất kỳ điều kiện nào đặc biệt mà tôi cần biết trước khi sử dụng chính sách bảo hành không?
+    - Nếu tôi không giữ lại hóa đơn, tôi vẫn có thể sử dụng chính sách bảo hành không?
+    - Tôi muốn biết về quy định bảo hành khi sản phẩm của tôi gặp sự cố khi ở nước ngoài.
+    - Có cần phải đưa sản phẩm của tôi đến trung tâm bảo hành của nhà sản xuất không?
+    - Tôi muốn biết về quy trình và thời gian xử lý khi tôi gửi sản phẩm của mình đi sửa chữa hoặc bảo hành.
+    - Chính sách bảo hành của bạn áp dụng cho sản phẩm đã qua sử dụng không?
+    - Tôi muốn biết liệu tôi có thể tự sửa chữa sản phẩm của mình không và tác động của việc này đối với chính sách bảo hành.
+    - Có bất kỳ loại hỏng hóc hoặc sự cố cụ thể nào không được bảo hành?
+    - Tôi muốn biết về quy định bảo hành khi tôi mua sản phẩm từ các nhà bán lẻ bên ngoài.
+    - Nếu tôi mua sản phẩm từ một quốc gia khác, chính sách bảo hành có áp dụng không?
+    - Có cần thiết phải bảo quản hóa đơn mua hàng để yêu cầu bảo hành không?
+    - Tôi muốn biết về quy định bảo hành cho các sản phẩm mua từ các kênh phân phối không chính thức.
